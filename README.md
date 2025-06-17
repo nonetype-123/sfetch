@@ -4,3 +4,9 @@ Simplefetch — is a utility for providing the user with all the information abo
 
 # Installation
 Write the following commands:
+```shell
+git clone https://github.com/nonetype-123/simplefetch/
+cd simplefetch
+chmod +x setup.sh
+./setup.sh
+```

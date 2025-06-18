@@ -33,7 +33,7 @@ info = {"username": f"{output('whoami')}@{output('uname -a').split()[1]}",
         "language": f"{output('echo $LANG').split('.')[0]}",
         "encoding": f"{output('echo $LANG').split('.')[1]}",
         "cpu": f"{cpu.split(':')[-1].strip()}",
-        "gpu": f'{output("glxinfo | grep \'OpenGL renderer\' | cut -d \":\" -f2-")}',
+        "gpu": output(r"glxinfo | grep 'OpenGL renderer' | cut -d ':' -f2-"),
         "memory": f"{memory.used / (1024 ** 3):.2f} / {memory.total / (1024 ** 3):.2f}GB {memory.percent}%"
         "disk (/)": f"{disk.used // (2**30)} / {disk.total // (2**30)} GB",
         "battery": f"{'Battery not detected' if battery is None else int(battery.percent)}%"

@@ -38,7 +38,7 @@ To install Simplefetch itself, you need to enter the following commands:
 git clone https://github.com/nonetype-123/simplefetch/
 cd simplefetch
 chmod +x setup.sh
-./setup.sh # --uninstall for deletion
+./setup.sh  # --uninstall for deletion
 ```
 
 # ! IMPORTANT !

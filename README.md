@@ -31,7 +31,7 @@ sudo zypper dup --from packman --allow-vendor-change
 sudo zypper install python3 python3-pip mesa-utils
 ```
 
-***
+---
 
 To install Simplefetch itself, you need to enter the following commands:
 ```shell

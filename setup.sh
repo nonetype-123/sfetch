@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo mkdir /usr/local/simplefetch
 sudo cp simplefetch.py /usr/local/simplefetch
 echo "alias simplefetch='python /usr/local/simplefetch/simplefetch.py'" >> ~/.bashrc

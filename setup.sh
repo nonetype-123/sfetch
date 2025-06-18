@@ -1,5 +1,5 @@
-mkdir ~/.local/simplefetch
-mv simplefetch.py ~/.local/simplefetch
-echo "alias simplefetch='python ~/.local/simplefetch/simplefetch.py'" >> ~/.bashrc
+sudo mkdir /usr/local/simplefetch
+sudo cp simplefetch.py /usr/local/simplefetch
+echo "alias simplefetch='python /usr/local/simplefetch/simplefetch.py'" >> ~/.bashrc
 source ~/.bashrc
 clear

@@ -1,9 +1,5 @@
 import platform, subprocess, distro, os, psutil, shutil
 
-def output(command):
-	output = subprocess.getoutput(command)
-	return output
-
 def color_text(text, color):
     colors = {
         "red": "\033[31m",
@@ -18,42 +14,62 @@ def color_text(text, color):
     	}
     return f"{colors.get(color, '')}{text}{colors['reset']}"
 
-battery = psutil.sensors_battery()
-memory = psutil.virtual_memory()
-cpu = os.popen("cat /proc/cpuinfo | grep 'model name' | head -1").read()
-disk = shutil.disk_usage("/")
+# everything related to collecting system information
 
-sys_info = {
-	"username": f"{output('whoami')}@{output('uname -a').split()[1]}",
-	"os": f"{distro.name()}",
-	"host": f"{output('cat /sys/devices/virtual/dmi/id/product_name')}",
-	"kernel": f"{os.uname()[2]}",
-	"uptime": f"{output('uptime').split()[0]} up",
-	"shell": f"{output('echo $SHELL')}",
-        "de": f"{output('printenv XDG_CURRENT_DESKTOP')}",
-	"terminal": f"{output('echo $TERM')}",
-	"language": f"{output('echo $LANG').split('.')[0]}",
-	"encoding": f"{output('echo $LANG').split('.')[1]}",
-	"cpu": f"{cpu.split(':')[-1].strip()}",
-        "gpu": f'{output("glxinfo | grep \'OpenGL renderer\' | cut -d \":\" -f2-")}',
-	"memory": f"{memory.used / (1024 ** 3):.2f} / {memory.total / (1024 ** 3):.2f}GB {memory.percent}%",
-        "disk": f"{disk.used // (2**30)} / {disk.total // (2**30)} GB",
-        "battery": f"{'Battery not detected' if battery is None else int(battery.percent)}%"
-	}
+class sys_info:
 
-sys_info_k = list(sys_info.keys())
+	def __init__(self):
 
-# WIP
+		self._data = {}
+		self.refresh()
+
+	def refresh(self):
+
+		battery = psutil.sensors_battery()
+		memory = psutil.virtual_memory()
+		cpu = os.popen("cat /proc/cpuinfo | grep 'model name' | head -1").read()
+		disk = shutil.disk_usage("/")
+		lang = subprocess.getoutput('echo $LANG').split('.')
+
+		self._data = {
+
+		"username": f"{subprocess.getoutput('whoami')}@{subprocess.getoutput('uname -a').split()[1]}",
+	        "os": distro.name(),
+	        "host": subprocess.getoutput('cat /sys/devices/virtual/dmi/id/product_name'),
+	        "kernel": os.uname()[2],
+	        "uptime": subprocess.getoutput('uptime').split()[0] + " up",
+	        "shell": subprocess.getoutput('echo $SHELL'),
+	        "de": os.getenv('XDG_CURRENT_DESKTOP'),
+	        "terminal": subprocess.getoutput('echo $TERM'),
+	        "language": lang[0],
+	        "encoding": lang[1],
+	        "cpu": cpu.split(':')[-1].strip(),
+	        "gpu": subprocess.getoutput("glxinfo | grep \'OpenGL renderer\' | cut -d \":\" -f2-"),
+	        "memory": f"{memory.used / (1024 ** 3):.2f} / {memory.total / (1024 ** 3):.2f} GB {memory.percent}%",
+		"disk": f"{disk.used // (2**30)} / {disk.total // (2**30)} GB",
+        	"battery": "Battery not detected" if battery is None else str(int(battery.percent)) + "%"
+
+	      	}
+
+data = sys_info()
+data_k = list(data._data.keys())
+
+# everything related to the utility style
 
 color = {
+
 	"debian": "red",
 	"ubuntu": "red",
 	"fedora": "dark-blue",
 	"arch": "blue",
-	"opensuse": "green"
+	"opensuse": "green",
+	"linux": "white"
+
 	}
 
-logo = {"debian": [
+logo = {
+
+	"debian": [
 			'       \u001b[00;1m_,met$$$$$gg.\t\t',
 			'    \u001b[00;1m,g$$$$$$$$$$$$$$$P.\t\t',
 			'  \u001b[00;1m,g$$P"     """Y$$.".\t\t',
@@ -135,13 +151,54 @@ logo = {"debian": [
         		' \u001b[36;1m+Mmy/.\u001b[00;0m                          \u001b[36;1m`:smN:\u001b[00;0m\t\t',
         		'\u001b[36;1m/+.\u001b[00;0m                                  \u001b[36;1m-o.\u001b[00;0m\t'
 		],
-	"opensuse": []
+	"opensuse": [
+                        '    \033[32m.,cdxxxoc,.               .:kKMMMNWMMMNk:.\u001b[00;0m\t\t',
+                        '    \033[32mcKMMN0OOOKWMMXo. ;        ;0MWk:.      .:OMMk.\u001b[00;0m\t',
+                        ' \033[32m;WMK; .       .lKMMNM,     :NMK,             .OMW.\u001b[00;0m\t',
+                        ' \033[32mcMW;            "WMMMN   ,XMK,                 oMM"\u001b[00;0m\t',
+                        '\033[32m.MMc               ..;l. xMN:                    KM0\u001b[00;0m\t',
+                        '\033[32m"MM.                   "NMO                      oMM\u001b[00;0m\t',
+                        '\033[32m.MM,                 .kMMl                       xMN\u001b[00;0m\t',
+                        ' \033[32mKM0               .kMM0. .dl:,..               .WMd\u001b[00;0m\t',
+                        ' \033[32m.XM0.           ,OMMK,    OMMMK.              .XMK\u001b[00;0m\t',
+                        '  \033[32moWMO:.    .;xNMMk,       NNNMKl.          .xWMx\u001b[00;0m\t',
+                        '    \033[32m:ONMMNXMMMKx;          .  ,xNMWKkxllox0NMWk,\u001b[00;0m\t',
+                        '        \033[32m.....                    .:dOOXXKOxl,\u001b[00;0m\t\t',
+			'\t\t\t\t\t\t\t',
+			'\t\t\t\t\t\t\t',
+			'\t\t\t\t\t\t\t'
+
+		],
+	"linux": [
+			'        \u001b[30;1m#####\u001b[00;1m\t\t',
+        		'       \u001b[30;1m#######\u001b[00;1m\t\t',
+        		'       \u001b[30;1m##\u001b[00;1mO\u001b[30;1m#\u001b[00;1mO\u001b[30;1m##\u001b[00;1m\t\t',
+       			'       \u001b[30;1m#\u001b[33;1m#####\u001b[30;1m#\u001b[00;1m\t\t',
+	       		'     \u001b[30;1m##\u001b[00;1m##\u001b[33;1m###\u001b[00;1m##\u001b[30;1m##\u001b[00;1m\t',
+        		'    \u001b[30;1m#\u001b[00;1m##########\u001b[30;1m##\u001b[00;1m\t',
+        		'   \u001b[30;1m#\u001b[00;1m############\u001b[30;1m##\u001b[00;1m\t',
+        		'   \u001b[30;1m#\u001b[00;1m############\u001b[30;1m###\u001b[00;1m\t',
+        		'  \u001b[33;1m##\u001b[30;1m#\u001b[00;1m###########\u001b[30;1m#\u001b[33;1m##\u001b[00;1m\t',
+        		'\u001b[33;1m######\u001b[30;1m#\u001b[00;1m#######\u001b[30;1m#\u001b[33;1m######\u001b[00;1m\t',
+        		'\u001b[33;1m#######\u001b[30;1m#\u001b[00;1m#####\u001b[30;1m#\u001b[33;1m#######\u001b[00;1m\t',
+        		'  \u001b[33;1m#####\u001b[30;1m#######\u001b[33;1m#####\u001b[00;1m\t',
+        		'\t\t\t',
+        		'\t\t\t',
+        		'\t\t\t',
+        		'\t\t\t'
+		]
+
 	}
 
-os_name = sys_info["os"].split()[0].lower()
+os_name = data._data["os"].split()[0].lower()
+
+if os_name not in logo.keys():
+	os_name = "linux"
 
 os_logo = logo[os_name]
 os_color = color[os_name]
 
-for i in range(0, len(os_logo) if len(os_logo) > len(sys_info_k) else len(sys_info_k)):
-	print(os_logo[i] if i < len(os_logo) else '', color_text(sys_info_k[i] if i < len(sys_info_k) else "", os_color) + ': ' + sys_info[sys_info_k[i]] if i < len(sys_info_k) else "")
+
+for i in range(0, len(os_logo) if len(os_logo) > len(data_k) else len(data_k)):
+
+	print(os_logo[i] if i < len(os_logo) else '', f"{color_text(data_k[i] + ': ', os_color) if i < len(data_k) else ''} {data._data[data_k[i]] if i < len(data_k) else ''}")

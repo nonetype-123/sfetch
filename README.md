@@ -4,7 +4,7 @@ Simplefetch — is a utility for providing the user with all the information abo
 
 If you find any bugs in the project then create an issue in this repository!
 
-# Installation
+# Installation and deletion
 
 Installing the necessary packages:
 
@@ -31,20 +31,14 @@ sudo zypper dup --from packman --allow-vendor-change
 sudo zypper install python3 python3-pip mesa-utils
 ```
 
+---
+
 To install Simplefetch itself, you need to enter the following commands:
 ```shell
 git clone https://github.com/nonetype-123/simplefetch/
 cd simplefetch
 chmod +x setup.sh
-./setup.sh
-```
-
-# Deletion
-
-Write the following commands:
-
-```shell
-./setup.sh --uninstall
+./setup.sh # --uninstall for deletion
 ```
 
 # ! IMPORTANT !

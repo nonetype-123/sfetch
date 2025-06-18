@@ -40,6 +40,15 @@ cd simplefetch
 chmod +x setup.sh
 ./setup.sh
 ```
+
+# Deletion
+
+Write the following commands:
+
+```shell
+./setup.sh --uninstall
+```
+
 # ! IMPORTANT !
 
 Works only with bash. Zsh and other shells do not work. This problem will be fixed in the future!

@@ -3,13 +3,29 @@
 Simplefetch — is a utility for providing the user with all the information about the system. This project was inspired by [neofetch](https://github.com/dylanaraps/neofetch).
 
 # Installation
-Write the following commands:
+
+Installing the necessary packages:
+
+**Debian/Ubuntu**
+```shell
+sudo apt-get install python3 python3-pip mesa-utils
+```
+
+**OpenSUSE**
+```shell
+sudo zypper addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+sudo zypper refresh
+sudo zypper dup --from packman --allow-vendor-change
+sudo zypper install python3 python3-pip mesa-utils
+```
+
+To install Simplefetch itself, you need to enter the following commands:
 ```shell
 git clone https://github.com/nonetype-123/simplefetch/
 cd simplefetch
 chmod +x setup.sh
 ./setup.sh
 ```
-! IMPORTANT !
+# ! IMPORTANT !
 
 Works only with bash. Zsh and other shells do not work. This problem will be fixed in the future!

@@ -4,3 +4,6 @@
   * A small bug has been fixed
   * New information added
   * The installer has been slightly improved
+# Version 1.2 _(19-06-2025)_
+  * Code structure changed
+  * Added ASCII logos

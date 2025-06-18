@@ -11,6 +11,11 @@ Installing the necessary packages:
 sudo apt-get install python3 python3-pip mesa-utils
 ```
 
+**Fedora**
+```shell
+sudo dnf install python3 python3-pip glx-utils
+```
+
 **Arch Linux**
 ```shell
 sudo pacman -S python3 python3-pip mesa-utils

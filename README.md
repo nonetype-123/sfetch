@@ -11,6 +11,11 @@ Installing the necessary packages:
 sudo apt-get install python3 python3-pip mesa-utils
 ```
 
+**Arch Linux**
+```shell
+sudo pacman -S python3 python3-pip mesa-utils
+```
+
 **OpenSUSE**
 ```shell
 sudo zypper addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman

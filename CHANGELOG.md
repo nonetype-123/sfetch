@@ -7,3 +7,4 @@
 # Version 1.2 _(19-06-2025)_
   * Code structure changed
   * Added ASCII logos
+  * Installer temporarily removed

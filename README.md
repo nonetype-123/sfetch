@@ -35,5 +35,5 @@ sudo zypper install python3 python3-pip mesa-utils
 
 To install Simplefetch itself, you need to enter the following commands:
 ```
-Temporarily unavailable
+Installer temporarily removed
 ```

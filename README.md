@@ -4,7 +4,7 @@ sfetch — is a utility for providing the user with all the information about th
 
 If you find any bugs in the project then create an issue in this repository!
 
-# Installation and deletion
+# Installation and deletion 
 
 Installing the necessary packages:
 
@@ -34,13 +34,6 @@ sudo zypper install python3 python3-pip mesa-utils
 ---
 
 To install Simplefetch itself, you need to enter the following commands:
-```shell
-git clone https://github.com/nonetype-123/simplefetch/
-cd simplefetch
-chmod +x setup.sh
-./setup.sh  # --uninstall for deletion
 ```
-
-# ! IMPORTANT !
-
-Works only with bash. Zsh and other shells do not work. This problem will be fixed in the future!
+Temporarily unavailable
+```
